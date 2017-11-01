@@ -71,6 +71,15 @@ defmodule Elastix.Document do
     |> HTTP.post(Poison.encode!(data))
   end
 
+  @doc """
+  Uses the Update By Query API.
+  """
+  def update_matching(elastic_url, index_name, %{}=query, query_params \\ []) do
+    elastic_url <> "/#{index_name}/_update_by_query"
+    |> add_query_params(query_params)
+    |> HTTP.post(Poison.encode!(query))
+  end
+
   @doc false
   def make_path(index_name, type_name, query_params) do
     "/#{index_name}/#{type_name}"
